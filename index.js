@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
       sites.forEach(site => {
           let listItem = document.createElement("li");
-          listItem.textContent = site;
+          let url = site.replace(/https?:\/\/([^/]+)\/.*/, '$1');
+          listItem.textContent = url;
           siteList.appendChild(listItem);
       });
   });
