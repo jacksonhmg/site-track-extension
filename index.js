@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", function() {
   // Fetch the stored sites and display them in the popup
-  chrome.storage.local.get(['sites'], (result) => {
+  chrome.storage.local.get(['sites', 'lastResetTime'], (result) => {
+
+      // Display the last reset time
+      const resetTimeDisplay = document.getElementById("resetTime"); // Assuming you have an element with this ID to display the time
+      if (result.lastResetTime) {
+          resetTimeDisplay.textContent = "Last Reset: " + result.lastResetTime;
+      } else {
+          resetTimeDisplay.textContent = "Not reset yet.";
+      }
       let sites = result.sites || [];
       let siteList = document.getElementById("siteList"); // Assuming you have a list or div with this ID
       let urlCount = {};
@@ -23,6 +31,11 @@ document.addEventListener("DOMContentLoaded", function() {
 const button = document.getElementById('reset-button').addEventListener('click', reset);
 
 function reset() {
-  chrome.storage.local.set({sites: []});
+  const now = new Date();
+  chrome.storage.local.set({
+      sites: [],
+      lastResetTime: now.toString()
+  });
   window.location.reload();
 }
+
