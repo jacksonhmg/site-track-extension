@@ -1,15 +1,13 @@
-document.addEventListener('DOMContentLoaded', function() {
-  displaySites();
-});
+document.addEventListener("DOMContentLoaded", function() {
+  // Fetch the stored sites and display them in the popup
+  chrome.storage.local.get(['sites'], (result) => {
+      let sites = result.sites || [];
+      let siteList = document.getElementById("siteList"); // Assuming you have a list or div with this ID
 
-function displaySites() {
-  let sites = JSON.parse(localStorage.getItem('sites') || '[]');
-  let sitesListContainer = document.getElementById('sites-list');
-  sitesListContainer.innerHTML = ''; 
-
-  sites.forEach(site => {
-      let siteElement = document.createElement('li');
-      siteElement.textContent = site;
-      sitesListContainer.appendChild(siteElement);
+      sites.forEach(site => {
+          let listItem = document.createElement("li");
+          listItem.textContent = site;
+          siteList.appendChild(listItem);
+      });
   });
-}
+});
