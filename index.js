@@ -19,3 +19,10 @@ document.addEventListener("DOMContentLoaded", function() {
       }
   });
 });
+
+const button = document.getElementById('reset-button').addEventListener('click', reset);
+
+function reset() {
+  chrome.storage.local.set({sites: []});
+  window.location.reload();
+}
